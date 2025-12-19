@@ -1,9 +1,18 @@
 # Introduction
 
+> [!IMPORTANT]
+> **Documentation Notice**
+>
+> We have unified our STIX 2.0 and STIX 2.1 representations into a single specification.
+> For the most up-to-date information about the structure and format of our published STIX files,
+> see the [ATT&CK Data Model Specification](https://mitre-attack.github.io/attack-data-model/schemas/changelog-schema).
+>
+> This document focuses on practical usage examples and Python recipes for working with ATT&CK data. For detailed information about object types, fields, and relationships, please refer to the specification linked above.
+
 This document describes how to query and manipulate the ATT&CK data in this repository. It is divided into two sections:
 
--   [Accessing ATT&CK data in python](#accessing-attck-data-in-python), which describes different methodologies that can be used to load the ATT&CK data into a script.
--   [Python recipes](#Python-Recipes), which provides python3 examples of common ways to query the ATT&CK data once loaded.
+- [Accessing ATT&CK data in python](#accessing-attck-data-in-python), which describes different methodologies that can be used to load the ATT&CK data into a script.
+- [Python recipes](#python-recipes), which provides python3 examples of common ways to query the ATT&CK data once loaded.
 
 Both sections heavily utilize the [stix2 python library](https://github.com/oasis-open/cti-python-stix2). Please refer to the [STIX2 Python API Documentation](https://stix2.readthedocs.io/en/latest/) for more information on how to work with STIX programmatically.
 
@@ -12,9 +21,6 @@ For information about the ATT&CK data model, object types, and specification det
 We also recommend reading the [ATT&CK Design and Philosophy Paper](https://attack.mitre.org/docs/ATTACK_Design_and_Philosophy_March_2020.pdf), which describes high-level overall approach, intention, and usage of ATT&CK.
 
 ## Table of Contents
-
-<!-- generated with https://ecotrust-canada.github.io/markdown-toc/ -->
-<!-- note: generator turns ATT&CK into att-ck, but GitHub section links for that substring are attck (no hyphen). -->
 
 - [Introduction](#introduction)
   - [Table of Contents](#table-of-contents)
@@ -56,7 +62,7 @@ We also recommend reading the [ATT&CK Design and Philosophy Paper](https://attac
 # Accessing ATT&CK data in python
 
 There are several ways to acquire the ATT&CK data in Python. All of them will provide an object
-implementing the DataStore API and can be used interchangeably with the recipes provided in the [Python recipes](#Python-Recipes) section.
+implementing the DataStore API and can be used interchangeably with the recipes provided in the [Python recipes](#python-recipes) section.
 
 This section utilizes the [stix2 python library](https://github.com/oasis-open/cti-python-stix2). Please refer to the [STIX2 Python API Documentation](https://stix2.readthedocs.io/en/latest/) for more information on how to work with STIX programmatically.
 
@@ -95,9 +101,9 @@ Information on the TAXII 2.1/STIX2.1 server can be found in [the TAXII server re
 
 Many users may opt to access the ATT&CK content via a local copy of the STIX data on this repo. This can be advantageous for several reasons:
 
--   Doesn't require internet access after the initial download
--   User can modify the ATT&CK content if desired
--   Downloaded copy is static, so updates to the ATT&CK catalog won't cause bugs in automated workflows. User can still manually update by cloning a fresh version of the data
+- Doesn't require internet access after the initial download
+- User can modify the ATT&CK content if desired
+- Downloaded copy is static, so updates to the ATT&CK catalog won't cause bugs in automated workflows. User can still manually update by cloning a fresh version of the data
 
 ### Access the most recent version via MemoryStore
 
@@ -131,8 +137,8 @@ src = get_attack_version("enterprise-attack", "18.0")
 
 Some users may instead prefer to access "live" ATT&CK content over the internet. This is advantageous for several reasons:
 
--   Always stays up to date with the evolving ATT&CK catalog
--   Doesn't require an initial download of the ATT&CK content, generally requires less setup
+- Always stays up to date with the evolving ATT&CK catalog
+- Doesn't require an initial download of the ATT&CK content, generally requires less setup
 
 ### Access from the ATT&CK TAXII server
 
@@ -194,7 +200,7 @@ You can then use this CompositeDataSource just as you would the DataSource for a
 
 # Python recipes
 
-Below are example python recipes which can be used to work with ATT&CK data. They assume the existence of an object implementing the DataStore API. Any of the methods outlined in the [Accessing ATT&CK data in python](#accessing-ATTCK-Data-in-Python) section should provide an object implementing this API.
+Below are example python recipes which can be used to work with ATT&CK data. They assume the existence of an object implementing the DataStore API. Any of the methods outlined in the [Accessing ATT&CK data in python](#accessing-attck-data-in-python) section should provide an object implementing this API.
 
 This section utilizes the [stix2 python library](https://github.com/oasis-open/cti-python-stix2). Please refer to the [STIX2 Python API Documentation](https://stix2.readthedocs.io/en/latest/) for more information on how to work with STIX programmatically. See also the section on [Requirements and imports](#requirements-and-imports).
 
@@ -231,7 +237,7 @@ t1134 = src.query([
 ])[0]
 ```
 
-The old 1:1 mitigations causing this issue are deprecated, so you can also filter them out that way — see [Removing revoked and deprecated objects](#Removing-revoked-and-deprecated-objects).
+The old 1:1 mitigations causing this issue are deprecated, so you can also filter them out that way — see [Removing revoked and deprecated objects](#removing-revoked-and-deprecated-objects).
 
 ### By name
 
@@ -270,7 +276,7 @@ get_group_by_alias(src, 'Cozy Bear')
 
 The recipes in this section address how to query the dataset for multiple objects.
 
-&#9888; When working with queries to return objects based on a set of characteristics, it is likely that you'll end up with a few objects which are no longer maintained by ATT&CK. These are objects marked as deprecated or revoked. We keep these outdated objects around so that workflows depending on them don't break, but we recommend you avoid using them when possible. Please see the section [Working with deprecated and revoked objects](#Working-with-deprecated-and-revoked-objects) for more information.
+&#9888; When working with queries to return objects based on a set of characteristics, it is likely that you'll end up with a few objects which are no longer maintained by ATT&CK. These are objects marked as deprecated or revoked. We keep these outdated objects around so that workflows depending on them don't break, but we recommend you avoid using them when possible. Please see the section [Working with deprecated and revoked objects](#working-with-deprecated-and-revoked-objects) for more information.
 
 ### Objects by type
 
