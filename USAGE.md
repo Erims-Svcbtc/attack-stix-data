@@ -146,16 +146,15 @@ Information on the TAXII 2.1/STIX2.1 server can be found in [the TAXII server re
 
 ### Access the most recent version from GitHub via requests
 
-Users can alternatively access the data from MITRE/CTI using HTTP requests, and load the resulting content into a MemoryStore.
-While typically the TAXII method is more desirable for "live" access, this method can be useful if you want to
-access data on a branch of the MITRE/CTI repo (the TAXII server only holds the master branch) or in the case of a TAXII server outage.
+Users can alternatively access the data from this repository using HTTP requests, and load the resulting content into a MemoryStore.
+This method can be useful if you want to access data from a tag of the repository.
 
 ```python
 import requests
 from stix2 import MemoryStore
 
 def get_data_from_branch(domain):
-    """get the ATT&CK STIX data from MITRE/CTI. Domain should be 'enterprise-attack', 'mobile-attack' or 'ics-attack'. Branch should typically be master."""
+    """get the ATT&CK STIX data from GitHub. Domain should be 'enterprise-attack', 'mobile-attack' or 'ics-attack'. Branch should typically be master."""
     stix_json = requests.get(f"https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/{domain}/{domain}.json").json()
     return MemoryStore(stix_data=stix_json["objects"])
 
@@ -169,7 +168,7 @@ import requests
 from stix2 import MemoryStore
 
 def get_data_from_version(domain, version):
-    """get the ATT&CK STIX data for the given version from MITRE/CTI. Domain should be 'enterprise-attack', 'mobile-attack' or 'ics-attack'."""
+    """get the ATT&CK STIX data for the given version from GitHub. Domain should be 'enterprise-attack', 'mobile-attack' or 'ics-attack'."""
     stix_json = requests.get(f"https://raw.githubusercontent.com/mitre-attack/attack-stix-data/master/{domain}/{domain}-{version}.json").json()
     return MemoryStore(stix_data=stix_json["objects"])
 
@@ -178,7 +177,9 @@ src = get_data_from_version("enterprise-attack", "18.0")
 
 ## Getting a list of versions
 
-The [collection index](/index.json) on this repository contains a full list of versions for each domain of ATT&CK. See our [collections document](https://github.com/center-for-threat-informed-defense/attack-workbench-frontend/blob/main/docs/collections.md#collection-indexes) for more information about the format of collection indexes. You can also find a human-readable version of that file in [index.md](/index.md).
+The [collection index](/index.json) on this repository contains a full list of versions for each domain of ATT&CK.
+See our [collections document](https://github.com/center-for-threat-informed-defense/attack-workbench-frontend/blob/main/docs/collections.md#collection-indexes) for more information about the format of collection indexes.
+You can also find a human-readable version of that file in [index.md](/index.md).
 
 The collection index was added in the upgrade to STIX 2.1 and is not available for [the STIX 2.0 dataset](https://github.com/mitre/cti).
 
@@ -321,7 +322,7 @@ def get_techniques_or_subtechniques(thesrc, include="both"):
 
 
 subtechniques = get_techniques_or_subtechniques(src, "subtechniques")
-subtechniques = remove_revoked_deprecated(subtechniques) # see https://github.com/mitre/cti/blob/master/USAGE.md#removing-revoked-and-deprecated-objects
+subtechniques = remove_revoked_deprecated(subtechniques)
 ```
 
 #### Getting software
